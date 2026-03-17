@@ -1,0 +1,17 @@
+(SELECT  
+    job_id,
+    job_title_short,
+    job_posted_date::TEXT
+FROM job_postings_fact
+WHERE job_posted_date BETWEEN '2023-01-01' AND '2023-03-31'
+LIMIT 5)
+
+UNION ALL
+
+(SELECT
+    skills_job_dim.job_id,
+    skills_dim.skills,
+    skills_dim.type
+FROM skills_job_dim
+    INNER JOIN skills_dim ON skills_dim.skill_id = skills_job_dim.skill_id
+LIMIT 5);

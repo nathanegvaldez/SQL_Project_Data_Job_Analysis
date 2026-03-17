@@ -1,0 +1,19 @@
+SELECT *
+FROM ( -- start of subquery
+    SELECT *
+    FROM job_postings_fact
+    WHERE EXTRACT(MONTH FROM job_posted_date) = 1
+) AS january_jobs;
+-- end of subquery
+-- subquery is a query within a query
+
+WITH january_jobs AS ( -- CTE starts here
+    SELECT *
+    FROM job_postings_fact
+    WHERE EXTRACT(MONTH FROM job_posted_date) = 1
+) -- CTE ends here
+
+SELECT *
+FROM january_jobs;
+
+-- CTEs (common table expressions) are defined first using "with" statement

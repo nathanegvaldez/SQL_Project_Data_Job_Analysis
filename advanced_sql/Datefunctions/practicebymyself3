@@ -1,0 +1,8 @@
+SELECT
+    job_postings_fact.company_id, 
+    EXTRACT(MONTH FROM job_posted_date) AS month,
+    company_dim.name AS company_name
+FROM job_postings_fact LEFT JOIN company_dim ON company_dim.company_id = job_postings_fact.company_id
+WHERE
+    job_health_insurance = 'TRUE'
+    AND EXTRACT (MONTH FROM job_posted_date)> '3';

@@ -1,0 +1,14 @@
+SELECT
+    COUNT(job_id),
+   CASE 
+        WHEN salary_year_avg >= 100000 THEN 'High'
+        WHEN salary_year_avg BETWEEN 50000 AND 99999 THEN 'Standard'
+        WHEN salary_year_avg < 50000 THEN 'Low'
+        ELSE 'not aplicable'
+    END AS type_of_salary
+FROM
+    job_postings_fact
+WHERE
+    job_title_short = 'Data Analyst'
+GROUP BY    
+    type_of_salary;

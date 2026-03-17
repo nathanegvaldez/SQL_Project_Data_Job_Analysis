@@ -1,0 +1,22 @@
+WITH frequently_mentioned_skills AS (
+
+SELECT 
+    COUNT (skill_id) AS skill_count,
+    skill_id
+FROM
+    skills_job_dim 
+GROUP BY
+    skill_id
+)
+
+SELECT
+    frequently_mentioned_skills.skill_count,
+    skills_dim.skill_id,
+    skills_dim.skills
+FROM
+    skills_dim
+    INNER JOIN frequently_mentioned_skills ON frequently_mentioned_skills.skill_id = skills_dim.skill_id
+LIMIT 5;
+
+
+

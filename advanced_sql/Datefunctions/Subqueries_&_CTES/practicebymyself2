@@ -1,0 +1,24 @@
+SELECT 
+    company_dim.company_id, 
+    company_dim.name,
+    job_counts.job_count,
+    CASE
+        WHEN job_counts.job_count < 10 THEN 'Small'
+        WHEN job_counts.job_count BETWEEN 10 AND 50 THEN 'Medium'
+        WHEN job_counts.job_count > 50 THEN 'Large'
+    END AS size_category
+FROM
+    company_dim
+    INNER JOIN ( 
+        SELECT
+            company_id,
+            COUNT(job_id) AS job_count
+        FROM
+            job_postings_fact
+        GROUP BY
+            company_id
+    ) 
+        AS job_counts ON job_counts.company_id = company_dim.company_id
+
+LIMIT 10;
+
