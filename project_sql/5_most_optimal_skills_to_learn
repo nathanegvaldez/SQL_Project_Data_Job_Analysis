@@ -1,0 +1,33 @@
+/*
+What are the most optimal skills to learn (high demand and high paying)?
+- identify skills in high demand and associated with high averge salaries for data analyst roles
+- concentrates on remote posoitions with specified salaries
+*/
+
+
+
+SELECT
+  ROUND(AVG(job_postings_fact.salary_year_avg),0) AS average_salary,
+  COUNT(skills_job_dim.job_id) AS demand_for_skills,
+  skills_dim.skills
+
+FROM
+  job_postings_fact
+  INNER JOIN skills_job_dim ON skills_job_dim.job_id = job_postings_fact.job_id
+  INNER JOIN skills_dim ON skills_dim.skill_id = skills_job_dim.skill_id
+
+WHERE
+  job_title_short = 'Data Analyst' AND 
+  salary_year_avg IS NOT NULL AND
+  job_location = 'Anywhere'
+
+GROUP BY
+  skills_dim.skills
+
+HAVING
+    COUNT(DISTINCT skills_job_dim.job_id) > 30     
+
+ORDER BY
+    demand_for_skills DESC,
+    average_salary DESC
+LIMIT 30
