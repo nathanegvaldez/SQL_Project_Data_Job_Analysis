@@ -24,4 +24,4 @@ FROM
     skills_demanded
 GROUP BY skills
 ORDER BY skills_in_demand DESC
-LIMIT 5 
+LIMIT 5
